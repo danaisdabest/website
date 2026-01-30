@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>✧ ARCHIVE_UNBOUND_06 ✧</title>
+    <style>
+        :root {
+            --rotation: 15deg;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background: #ffffff; 
+            color: #1a1a1a;
+            font-family: "Helvetica Neue", "Helvetica", sans-serif;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        /* Irregular Grid Lines */
+        .grid-line {
+            position: absolute;
+            background: rgba(0,0,0,0.03);
+            pointer-events: none;
+        }
+        .v { width: 1px; height: 100vh; }
+        .h { height: 1px; width: 100vw; }
+
+        /* Centered TODO Text */
+        #todo-anchor {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: left;
+            z-index: 1000;
+            width: 80%;
+            pointer-events: none;
+        }
+
+        #todo-display {
+            font-family: monospace;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 6px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            /* Subtle breathing animation */
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.4; transform: scale(0.99); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Character reveal animation */
+        .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(2px);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .char.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* The Compass */
+        .compass-pivot {
+            position: absolute;
+            top: 15%; 
+            right: 10%;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ring {
+            position: absolute;
+            border: 0.5px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
+        }
+
+        .prism {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 0.5px solid #000;
+            background: rgba(255,255,255,0.8);
+            transform: rotate(var(--rotation));
+            transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 100;
+        }
+
+        /* The Rainbow Icon */
+        .rainbow-icon {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(to bottom, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
+            border-radius: 2px;
+            margin-bottom: 10px;
+            opacity: 0.8;
+            transition: transform 0.2s;
+        }
+
+        .nav-item:hover .rainbow-icon {
+            transform: scale(1.1);
+        }
+
+        /* Navigation */
+        nav {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .nav-item {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            pointer-events: auto;
+        }
+
+        .label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #888;
+            transition: 0.3s;
+        }
+
+        .nav-item:hover .label {
+            color: #000;
+            letter-spacing: 7px;
+        }
+
+        /* Placement */
+        .pos-1 { top: 40%; left: 8%; }
+        .pos-2 { top: 10%; left: 25%; }
+        .pos-3 { bottom: 15%; left: 40%; }
+        .pos-4 { top: 60%; right: 20%; }
+
+        /* Meta */
+        .meta {
+            position: absolute;
+            font-family: monospace;
+            font-size: 8px;
+            color: #bbb;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid-line v" style="left: 33%;"></div>
+    <div class="grid-line h" style="top: 25%;"></div>
+    <div class="grid-line v" style="left: 12%;"></div>
+
+    <div id="todo-anchor">
+        <div id="todo-display"># TODO: [AWAITING_SELECTION]</div>
+    </div>
+
+    <div class="meta" style="top: 20px; left: 20px;">PROJECTS: TANGIBLE AND DIGITAL</div>
+    <div class="meta" style="bottom: 20px; left: 20px;">[ STATUS_ACTIVE ]</div>
+    <div class="meta" style="top: 20px; right: 20px;">VER: 0.0.1</div>
+    <div class="meta" style="bottom: 20px; right: 20px;">2026_01_30</div>
+
+    <div class="compass-pivot">
+        <div class="ring" style="width: 250px; height: 250px;"></div>
+        <div class="ring" style="width: 100px; height: 100px; background: rgba(0,0,0,0.02);"></div>
+        <div class="prism" id="needle"></div>
+    </div>
+
+    <nav>
+        <a href="#" class="nav-item pos-1" data-angle="-45deg" data-todo="
+        # TODO: SEASHELL E-READER 
+        #       INSPIRED BY 
+        #       'IT FOLLOWS' (2013)">
+            <div class="rainbow-icon"></div>
+            <span class="label">Seashell_E-Reader</span>
+        </a>
+
+        <a href="#" class="nav-item pos-2" data-angle="15deg" data-todo="
+            # TODO: 3D PRINTED CONCH 
+            #       SHELL HOUSES 
+            #       BLUETOOTH SPEAKER 
+            #       WITH MIC 
+            #       FOR PHONECALLS 
+            #       AND AUDIO MEDIA">
+            <div class="rainbow-icon" style="filter: hue-rotate(90deg);"></div>
+            <span class="label">Bluetooth_ShellPhone</span>
+        </a>
+
+        <a href="#" class="nav-item pos-3" data-angle="140deg" data-todo="
+        # TODO: 2.4 INCH ESP32 
+        #       'CHEAP YELLOW DISPLAY' 
+        #       PLAYS MJPEGS OF 
+        #       BLINKING EYE">
+            <div class="rainbow-icon" style="filter: hue-rotate(180deg);"></div>
+            <span class="label">ESP32_MJPEGs</span>
+        </a>
+
+        <a href="#" class="nav-item pos-4" data-angle="60deg" data-todo="
+        # TODO: ANIMATED BLINKING 
+        #       EYE DISPLAYS 
+        #       ON .71 INCH 
+        #       ROUND ESP32 
+        #       DEV BOARD">
+            <div class="rainbow-icon" style="filter: hue-rotate(270deg);"></div>
+            <span class="label">Eye_Ring</span>
+        </a>
+    </nav>
+
+    <script>
+        const needle = document.getElementById('needle');
+        const links = document.querySelectorAll('.nav-item');
+        const display = document.getElementById('todo-display');
+
+        function updateTodo(text) {
+            display.innerHTML = '';
+            let charIndex = 0;
+            // Create spans for each character to allow for the reveal
+            text.split('').forEach((char, i) => {
+                if (char === '\n' || char === '\r') {
+                    // Create a line break
+                    const br = document.createElement('br');
+                    display.appendChild(br);
+                } else {
+                    const span = document.createElement('span');
+                    span.textContent = char === ' ' ? '\u00A0' : char; // Handle spaces
+                    span.className = 'char';
+                    display.appendChild(span);
+                    
+                    // Staggered appearance
+                    setTimeout(() => {
+                        span.classList.add('visible');
+                    }, charIndex * 30);
+                    charIndex++;
+                }
+            });
+        }
+
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                const angle = link.getAttribute('data-angle');
+                document.documentElement.style.setProperty('--rotation', angle);
+            });
+
+            link.addEventListener('mouseleave', () => {
+                document.documentElement.style.setProperty('--rotation', '15deg');
+            });
+
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const newText = link.getAttribute('data-todo');
+                updateTodo(newText);
+            });
+        });
+
+        // Parallax for the whole screen
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.pageX) / 80;
+            const y = (window.innerHeight / 2 - e.pageY) / 80;
+            document.querySelector('nav').style.transform = `translate(${x}px, ${y}px)`;
+            document.querySelector('.compass-pivot').style.transform = `translate(${-x}px, ${-y}px)`;
+        });
+    </script>
+</body>
+</html>
