@@ -8,7 +8,7 @@
             --bg: #ffffff; 
             --ink: #000000;
             --faded: #888888;
-            --retro-grey: #c0c0c0; /* Classic Win95/2k Grey */
+            --retro-grey: #c0c0c0;
             --retro-light: #ffffff;
             --retro-shadow: #808080;
             --font-typewriter: "Courier New", Courier, monospace;
@@ -28,6 +28,18 @@
             text-transform: uppercase;
             line-height: 1.0;
             padding-bottom: 40px;
+            position: relative;
+        }
+
+        .top-right-notice {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 9px;
+            color: var(--faded);
+            text-align: right;
+            letter-spacing: 0.5px;
+            z-index: 100;
         }
 
         .line { width: 100%; border-top: 1px solid var(--ink); }
@@ -51,7 +63,6 @@
         .file-entry.active { color: var(--ink); font-weight: bold; }
         .col-name { text-decoration: underline; }
 
-        /* ARCHIVE CONTENT WINDOW */
         .content-area { 
             grid-column: 5; 
             grid-row: 1 / span 100; 
@@ -72,145 +83,96 @@
             display: flex; 
             height: var(--archive-max-height);
             align-items: flex-start;
-            justify-content: flex-start;
+            justify-content: center; /* Centered for the Margiela look */
             padding-top: 40px;
         }
         
         .serial { font-size: 9px; color: var(--faded); margin-bottom: 20px; display: block; text-transform: uppercase; }
 
-        /* PORTRAIT ENLARGE LAYOUT */
-        .portrait-layout-top {
-            display: flex;
-            gap: 20px;
-            align-items: flex-end; 
-            justify-content: flex-end;
-            margin-bottom: 15px;
-        }
-
-        .portrait-info {
-            flex: 1;
-            font-size: 9px;
-            line-height: 1.4;
-            color: var(--faded);
-            padding-left: 0; 
-        }
-
-        .portrait-info h3 {
-            color: var(--ink);
-            font-size: 11px;
-            margin-bottom: 10px;
-            text-decoration: underline;
-        }
-
-        .portrait-visuals-main {
-            width: 80%; 
-        }
-
-        .gallery-grid { 
-            width: 100%; 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 10px; 
-            margin-top: 20px;
-            padding-top: 15px;
-        }
-
-        /* HORIZONTAL SLIDER WITH TEXT */
-        .scroll-h { 
-            display: flex; 
-            overflow-x: auto; 
-            gap: 20px; 
-            padding-bottom: 15px; 
-        }
-
-        .slide-item {
-            min-width: 350px;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .scroll-h-item { 
+        /* MARGIELA INSPIRED INDEX CARD */
+        .margiela-card {
+            text-align: center;
             width: 100%;
-            height: 500px; 
-            object-fit: cover; 
+            max-width: 400px;
+            padding: 20px;
+            rotate: -6deg;
         }
 
-        .slide-caption {
-            font-size: 10px;
-            color: var(--faded);
-            line-height: 1.2;
-            padding-left: 0;
+        .num-grid {
+            font-size: 18px;
+            letter-spacing: 4px;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
 
-        /* DIAGONAL TOC STYLE */
-        .diagonal-toc {
-            padding: 60px 50px;
-            border-radius: 4px;
-            width: fit-content;
-            transform: rotate(-4deg);
-            background: var(--bg);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        .brand-sub {
+            font-size: 11px;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
         }
 
-        .diagonal-toc h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--ink);
+        .margiela-line {
+            border-top: 1px solid var(--ink);
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .toc-list {
+            text-align: left;
             display: inline-block;
         }
 
-        .diagonal-toc p {
-            font-size: 13px;
-            margin: 10px 0;
-            letter-spacing: 1.5px;
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .circle-num {
+            border: 1px solid var(--ink);
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            flex-shrink: 0;
         }
 
         /* IMAGE STYLING */
-        .archive-img { 
-            width: 100%; 
-            height: auto; 
-            display: block;
-        }
-
+        .portrait-layout-top { display: flex; gap: 20px; align-items: flex-end; justify-content: flex-end; margin-bottom: 15px; }
+        .portrait-info { flex: 1; font-size: 9px; line-height: 1.4; color: var(--faded); }
+        .portrait-info h3 { color: var(--ink); font-size: 11px; margin-bottom: 10px; text-decoration: underline; }
+        .portrait-visuals-main { width: 80%; }
+        .gallery-grid { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; padding-top: 15px; }
+        .archive-img { width: 100%; height: auto; display: block; }
         .main-view-portrait { aspect-ratio: 3/4; object-fit: cover; }
         .thumb { aspect-ratio: 3/4; cursor: pointer; object-fit: cover; width: 100%; }
         .thumb:hover { filter: invert(1); }
 
-        /* --- 2000s STYLE SCROLLBARS --- */
-        .data-card::-webkit-scrollbar, 
-        .scroll-h::-webkit-scrollbar { 
-            width: 16px; 
-            height: 16px; 
-        }
+        /* 2000s SCROLLBARS */
+        .data-card::-webkit-scrollbar, .scroll-h::-webkit-scrollbar { width: 16px; height: 16px; }
+        .data-card::-webkit-scrollbar-track, .scroll-h::-webkit-scrollbar-track { background: #e0e0e0; background-image: radial-gradient(#bcbcbc 25%, transparent 25%); background-size: 2px 2px; }
+        .data-card::-webkit-scrollbar-thumb, .scroll-h::-webkit-scrollbar-thumb { background: var(--retro-grey); border: 2px solid; border-color: var(--retro-light) var(--retro-shadow) var(--retro-shadow) var(--retro-light); box-shadow: inset 1px 1px 0 var(--retro-light), inset -1px -1px 0 var(--retro-shadow); }
         
-        /* The Track - Checkered pattern simulation */
-        .data-card::-webkit-scrollbar-track, 
-        .scroll-h::-webkit-scrollbar-track { 
-            background: #e0e0e0;
-            background-image: radial-gradient(#bcbcbc 25%, transparent 25%);
-            background-size: 2px 2px;
-        }
-
-        /* The Thumb - The classic bevel button */
-        .data-card::-webkit-scrollbar-thumb, 
-        .scroll-h::-webkit-scrollbar-thumb { 
-            background: var(--retro-grey);
-            border: 2px solid;
-            border-color: var(--retro-light) var(--retro-shadow) var(--retro-shadow) var(--retro-light);
-            box-shadow: inset 1px 1px 0 var(--retro-light), inset -1px -1px 0 var(--retro-shadow);
-        }
-
-        .data-card::-webkit-scrollbar-thumb:hover, 
-        .scroll-h::-webkit-scrollbar-thumb:hover { 
-            background: #d4d4d4;
-        }
-
+        .scroll-h { display: flex; overflow-x: auto; gap: 20px; padding-bottom: 15px; }
+        .slide-item { min-width: 350px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
+        .scroll-h-item { width: 100%; height: 500px; object-fit: cover; }
+        .slide-caption { font-size: 10px; color: var(--faded); line-height: 1.2; }
         .manifest-footer { padding: 10px 10px; color: var(--faded); font-size: 9px; }
     </style>
 </head>
 <body>
+
+    <div class="top-right-notice">
+        THIS SITE IS A RECREATION<br>
+        OF A B C // VER_2.026
+    </div>
 
     <div class="line" style="margin-top: 20px;"></div>
     <h1 class="page-title">ISAIAH HAUTE</h1>
@@ -254,16 +216,32 @@
             <div class="content-area">
                 
                 <div id="f0" class="data-card index-card active">
-                    <div class="diagonal-toc">
-                        <span class="serial" style="margin-bottom: 10px;">LOG_ID // 0000-X</span>
-                        <h2>ARCHIVE_INDEX</h2>
-                        <p>001 // PORTRAIT_EXPAND_ANALYSIS</p>
-                        <p>042 // NARROW_SLIDE_MANIFEST</p>
-                        <p>108 // INFINITE_FEED_DATA</p>
-                        <p>999 // TERMINAL_CONNECTION [LOCKED]</p>
-                        <div style="margin-top: 35px; font-size: 8px; color: var(--faded);">
-                            AUTHORIZATION: ISAIAH_HAUTE_V1<br>
-                            STATUS: IMMUTABLE_RECORD
+                    <div class="margiela-card">
+                        <div class="num-grid">
+                            0 1 2 3 4 5 6 7 8 9<br>
+                            10 11 12 13 14 15 16<br>
+                            17 18 19 20 21 22 23
+                        </div>
+                        <div class="brand-sub">ISAIAH HAUTE<br>ARCHIVE</div>
+                        <div class="margiela-line"></div>
+                        
+                        <div class="toc-list">
+                            <div class="toc-item">
+                                <div class="circle-num">0</div>
+                                <span>ARCHIVE_INDEX_MASTER</span>
+                            </div>
+                            <div class="toc-item">
+                                <div class="circle-num">1</div>
+                                <span>PORTRAIT_EXPAND_ANALYSIS</span>
+                            </div>
+                            <div class="toc-item">
+                                <div class="circle-num">42</div>
+                                <span>NARROW_SLIDE_MANIFEST</span>
+                            </div>
+                            <div class="toc-item">
+                                <div class="circle-num">108</div>
+                                <span>INFINITE_FEED_DATA</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -279,22 +257,14 @@
                             <p id="meta-desc" style="margin-top: 10px;">PROPORTIONS ALIGN WITH MASTER GRID 004-B. READY FOR DISTRIBUTION.</p>
                         </div>
                         <div class="portrait-visuals-main">
-                            <img id="mainView" class="archive-img main-view-portrait" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800" alt="Main View">
+                            <img id="mainView" class="archive-img main-view-portrait" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800">
                         </div>
                     </div>
                     <div class="gallery-grid">
-                        <img class="thumb" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=200" 
-                             data-obj="HUMAN_FORM_01" data-light="HIGH_CONTRAST" data-status="VERIFIED" data-desc="PROPORTIONS ALIGN WITH MASTER GRID 004-B. READY FOR DISTRIBUTION."
-                             onclick="swapView(this)">
-                        <img class="thumb" src="https://images.unsplash.com/photo-1539109132314-34a959df99b4?auto=format&fit=crop&q=80&w=200" 
-                             data-obj="HUMAN_FORM_02" data-light="WARM_NATURAL" data-status="ARCHIVED" data-desc="TEXTURE ANALYSIS SHOWS ORGANIC COTTON BLEND. SUBJECT 02 PREFERRED."
-                             onclick="swapView(this)">
-                        <img class="thumb" src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=200" 
-                             data-obj="HUMAN_FORM_03" data-light="LOW_KEY" data-status="PENDING" data-desc="SILHOUETTE RATIO EXCEEDS STANDARD PARAMETERS. FURTHER EVALUATION REQUIRED."
-                             onclick="swapView(this)">
-                        <img class="thumb" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=200" 
-                             data-obj="HUMAN_FORM_04" data-light="STUDIO_NEUTRAL" data-status="CERTIFIED" data-desc="COLOR BALANCE OPTIMIZED FOR CYBERNETIC OPTICS. PRIMARY SELECTION."
-                             onclick="swapView(this)">
+                        <img class="thumb" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=200" data-obj="HUMAN_FORM_01" data-light="HIGH_CONTRAST" data-status="VERIFIED" data-desc="PROPORTIONS ALIGN WITH MASTER GRID 004-B." onclick="swapView(this)">
+                        <img class="thumb" src="https://images.unsplash.com/photo-1539109132314-34a959df99b4?auto=format&fit=crop&q=80&w=200" data-obj="HUMAN_FORM_02" data-light="WARM_NATURAL" data-status="ARCHIVED" data-desc="TEXTURE ANALYSIS SHOWS ORGANIC COTTON BLEND." onclick="swapView(this)">
+                        <img class="thumb" src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=200" data-obj="HUMAN_FORM_03" data-light="LOW_KEY" data-status="PENDING" data-desc="SILHOUETTE RATIO EXCEEDS STANDARD PARAMETERS." onclick="swapView(this)">
+                        <img class="thumb" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=200" data-obj="HUMAN_FORM_04" data-light="STUDIO_NEUTRAL" data-status="CERTIFIED" data-desc="COLOR BALANCE OPTIMIZED FOR CYBERNETIC OPTICS." onclick="swapView(this)">
                     </div>
                 </div>
 
@@ -303,27 +273,7 @@
                     <div class="scroll-h">
                         <div class="slide-item">
                             <img class="scroll-h-item" src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=600">
-                            <div class="slide-caption">
-                                <strong>ITEM_042A</strong><br>
-                                SPECTRAL_ANALYSIS: COMPLETE<br>
-                                TAG: STREET_MINIMAL
-                            </div>
-                        </div>
-                        <div class="slide-item">
-                            <img class="scroll-h-item" src="https://images.unsplash.com/photo-1485462537746-965f33f7f6a7?auto=format&fit=crop&q=80&w=600">
-                            <div class="slide-caption">
-                                <strong>ITEM_042B</strong><br>
-                                SPECTRAL_ANALYSIS: PENDING<br>
-                                TAG: BRUTALIST_HUE
-                            </div>
-                        </div>
-                        <div class="slide-item">
-                            <img class="scroll-h-item" src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=600">
-                            <div class="slide-caption">
-                                <strong>ITEM_042C</strong><br>
-                                SPECTRAL_ANALYSIS: COMPLETE<br>
-                                TAG: TEXTURE_SCAN_09
-                            </div>
+                            <div class="slide-caption"><strong>ITEM_042A</strong><br>TAG: STREET_MINIMAL</div>
                         </div>
                     </div>
                 </div>
@@ -331,8 +281,6 @@
                 <div id="f3" class="data-card">
                     <span class="serial">LOG_ID // 4412-G</span>
                     <img class="archive-img" src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&q=80&w=800">
-                    <img class="archive-img" src="https://images.unsplash.com/photo-1550630968-316228340156?auto=format&fit=crop&q=80&w=800">
-                    <img class="archive-img" src="https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?auto=format&fit=crop&q=80&w=800">
                 </div>
             </div>
         </div>
@@ -350,10 +298,7 @@
         }
         
         function swapView(el) {
-            // Update image source
             document.getElementById('mainView').src = el.src;
-            
-            // Update metadata text
             document.getElementById('meta-obj').innerText = 'OBJECT: ' + el.getAttribute('data-obj');
             document.getElementById('meta-light').innerText = 'LIGHT: ' + el.getAttribute('data-light');
             document.getElementById('meta-status').innerText = 'STATUS: ' + el.getAttribute('data-status');
