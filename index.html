@@ -2,282 +2,192 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>✧ PROJECTS: TANGIBLE AND DIGITAL ✧</title>
+    <title>ARCHIVE_SYSTEM_V3</title>
     <style>
         :root {
-            --rotation: 15deg;
+            /* Aged printer paper white */
+            --bg: #f5f5f3; 
+            --ink: #1a1a1a;
+            --faded: #8c8c8c;
+            /* Using the most classic typewriter stack available */
+            --font-typewriter: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Console", monospace;
         }
 
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            background: #ffffff; 
-            color: #1a1a1a;
-            font-family: "Helvetica Neue", "Helvetica", sans-serif;
-            overflow: hidden;
-            cursor: crosshair;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* Irregular Grid Lines */
-        .grid-line {
-            position: absolute;
-            background: rgba(0,0,0,0.03);
-            pointer-events: none;
-        }
-        .v { width: 1px; height: 100vh; }
-        .h { height: 1px; width: 100vw; }
-
-        /* Centered TODO Text */
-        #todo-anchor {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: left;
-            z-index: 1000;
-            width: 80%;
-            pointer-events: none;
-        }
-
-        #todo-display {
-            font-family: monospace;
-            font-size: 18px;
-            font-weight: bold;
-            letter-spacing: 6px;
-            color: #1a1a1a;
+        body {
+            background-color: var(--bg);
+            color: var(--ink);
+            font-family: var(--font-typewriter);
+            padding: 50px 70px;
             text-transform: uppercase;
-            /* Subtle breathing animation */
-            animation: breathe 4s ease-in-out infinite;
+            /* Subtle ink-on-paper texture */
+            background-image: url("https://www.transparenttextures.com/patterns/p6.png");
         }
 
-        @keyframes breathe {
-            0%, 100% { opacity: 0.4; transform: scale(0.99); }
-            50% { opacity: 1; transform: scale(1); }
-        }
-
-        /* Character reveal animation */
-        .char {
+        /* TITLE: SAME TYPEWRITER FONT, JUST BOLD AND TIGHT */
+        .page-title {
+            font-weight: 900;
+            font-size: 1.1rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 70px;
             display: inline-block;
-            opacity: 0;
-            transform: translateY(2px);
-            transition: opacity 0.2s, transform 0.2s;
-        }
-        .char.visible {
-            opacity: 1;
-            transform: translateY(0);
+            white-space: nowrap;
         }
 
-        /* The Compass */
-        .compass-pivot {
-            position: absolute;
-            top: 15%; 
-            right: 10%;
-            width: 300px;
-            height: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* HEADERS */
+        .manifest-header {
+            display: grid;
+            grid-template-columns: 220px 150px 100px 1fr;
+            color: var(--faded);
+            border-bottom: 1px solid var(--faded);
+            padding-bottom: 5px;
+            margin-bottom: 25px;
+            font-size: 10px;
         }
 
-        .ring {
-            position: absolute;
-            border: 0.5px solid rgba(0,0,0,0.1);
-            border-radius: 50%;
+        /* LAYOUT */
+        .container {
+            display: grid;
+            grid-template-columns: 470px 1fr;
+            gap: 100px;
         }
 
-        .prism {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border: 0.5px solid #000;
-            background: rgba(255,255,255,0.8);
-            transform: rotate(var(--rotation));
-            transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 100;
-        }
-
-        /* The Rainbow Icon */
-        .rainbow-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(to bottom, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
-            border-radius: 2px;
-            margin-bottom: 10px;
-            opacity: 0.8;
-            transition: transform 0.2s;
-        }
-
-        .nav-item:hover .rainbow-icon {
-            transform: scale(1.1);
-        }
-
-        /* Navigation */
-        nav {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .nav-item {
-            position: absolute;
+        /* DIRECTORY ENTRIES */
+        .directory-list {
             display: flex;
             flex-direction: column;
-            text-decoration: none;
-            pointer-events: auto;
         }
 
-        .label {
-            font-size: 20px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #888;
-            transition: 0.3s;
+        .file-entry {
+            display: grid;
+            grid-template-columns: 220px 150px 100px;
+            padding: 8px 0;
+            cursor: pointer;
+            font-size: 11px;
+            color: var(--faded);
         }
 
-        .nav-item:hover .label {
-            color: #000;
-            letter-spacing: 7px;
+        .file-entry:hover {
+            color: var(--ink);
         }
 
-        /* Placement */
-        .pos-1 { top: 30%; left: 8%; }
-        .pos-2 { top: 10%; left: 25%; }
-        .pos-3 { bottom: 5%; left: 50%; }
-        .pos-4 { top: 70%; left: 10%; }
-        .pos-5 { top: 65%; right: 10%; }
-
-        /* Meta */
-        .meta {
-            position: absolute;
-            font-family: monospace;
-            font-size: 8px;
-            color: #bbb;
-            letter-spacing: 2px;
+        .file-entry.active {
+            color: var(--ink);
+            font-weight: bold;
         }
+
+        .file-entry.active div:first-child::before {
+            content: "* "; /* Old school selection marker */
+        }
+
+        /* CONTENT AREA */
+        .data-card {
+            display: none;
+            max-width: 400px;
+        }
+
+        .data-card.active {
+            display: block;
+        }
+
+        .serial {
+            font-size: 9px;
+            color: var(--faded);
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .content-body {
+            font-size: 12px;
+            line-height: 1.5;
+            text-transform: none; /* Keeps that "typed letter" feel */
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="grid-line v" style="left: 33%;"></div>
-    <div class="grid-line h" style="top: 25%;"></div>
-    <div class="grid-line v" style="left: 12%;"></div>
+    <h1 class="page-title">ISAIAH HAUTE</h1>
 
-    <div id="todo-anchor">
-        <div id="todo-display"># TODO: [AWAITING_SELECTION]</div>
+    <div class="manifest-header">
+        <div>Name</div>
+        <div>Update Time</div>
+        <div>Size</div>
+        <div>Archives</div>
     </div>
 
-    <div class="meta" style="top: 20px; left: 20px;">PROJECTS: TANGIBLE AND DIGITAL</div>
-    <div class="meta" style="bottom: 20px; left: 20px;">[ STATUS_ACTIVE ]</div>
-    <div class="meta" style="top: 20px; right: 20px;">VER: 0.0.1</div>
-    <div class="meta" style="bottom: 20px; right: 20px;">2026_01_30</div>
+    <div class="container">
+        <div class="directory-list">
+            
+            <div class="file-entry active" onclick="openFile('f1', this)">
+                <div>001_Introduction</div>
+                <div>10:22:01</div>
+                <div>4.0kb</div>
+            </div>
 
-    <div class="compass-pivot">
-        <div class="ring" style="width: 250px; height: 250px;"></div>
-        <div class="ring" style="width: 100px; height: 100px; background: rgba(0,0,0,0.02);"></div>
-        <div class="prism" id="needle"></div>
+            <div class="file-entry" onclick="openFile('f2', this)">
+                <div>042_Visual_Manifesto</div>
+                <div>14:55:12</div>
+                <div>120kb</div>
+            </div>
+
+            <div class="file-entry" onclick="openFile('f3', this)">
+                <div>108_Archive_Collection</div>
+                <div>08:30:59</div>
+                <div>88.4mb</div>
+            </div>
+
+            <div class="file-entry" onclick="openFile('f4', this)">
+                <div>999_Terminal_Connect</div>
+                <div>00:01:44</div>
+                <div>1.2kb</div>
+            </div>
+
+        </div>
+
+        <div class="content-viewer">
+            <div id="f1" class="data-card active">
+                <span class="serial">LOG_ID // 8829-A</span>
+                <div class="content-body">
+                    subject: initialization.<br><br>
+                    this system is a raw data retrieval node for the isaiah haute collection. all entries are generated via the primary terminal.
+                </div>
+            </div>
+
+            <div id="f2" class="data-card">
+                <span class="serial">LOG_ID // 9901-B</span>
+                <div class="content-body">
+                    subject: visual manifesto.<br><br>
+                    the focus is the silhouette. the texture is the evidence. 
+                </div>
+            </div>
+
+            <div id="f3" class="data-card">
+                <span class="serial">LOG_ID // 4412-G</span>
+                <div class="content-body">
+                    subject: physical collection.<br><br>
+                    archives updated for the current season. documentation of construction and fit.
+                </div>
+            </div>
+
+            <div id="f4" class="data-card">
+                <span class="serial">LOG_ID // 0000-O</span>
+                <div class="content-body">
+                    subject: connectivity.<br><br>
+                    terminal address: archive@isaiahhaute.com
+                </div>
+            </div>
+        </div>
     </div>
-
-    <nav>
-        <a href="#" class="nav-item pos-1" data-angle="-45deg" data-todo="
-        # TODO: SEASHELL E-READER 
-        #       INSPIRED BY 
-        #       'IT FOLLOWS' (2013)">
-            <div class="rainbow-icon"></div>
-            <span class="label">Seashell_E-Reader</span>
-        </a>
-
-        <a href="#" class="nav-item pos-2" data-angle="15deg" data-todo="
-            # TODO: 3D PRINTED CONCH 
-            #       SHELL HOUSES 
-            #       BLUETOOTH SPEAKER 
-            #       WITH MIC 
-            #       FOR PHONECALLS 
-            #       AND AUDIO MEDIA">
-            <div class="rainbow-icon" style="filter: hue-rotate(90deg);"></div>
-            <span class="label">Bluetooth_ShellPhone</span>
-        </a>
-
-        <a href="#" class="nav-item pos-3" data-angle="140deg" data-todo="
-        # TODO: 2.4 INCH ESP32 
-        #       'CHEAP YELLOW DISPLAY' 
-        #       PLAYS MJPEGS OF 
-        #       BLINKING EYE">
-            <div class="rainbow-icon" style="filter: hue-rotate(180deg);"></div>
-            <span class="label">ESP32_MJPEGs</span>
-        </a>
-
-        <a href="#" class="nav-item pos-4" data-angle="60deg" data-todo="
-        # TODO: ANIMATED BLINKING 
-        #       EYE DISPLAYS 
-        #       ON .71 INCH 
-        #       ROUND ESP32 
-        #       DEV BOARD">
-            <div class="rainbow-icon" style="filter: hue-rotate(270deg);"></div>
-            <span class="label">Eye_Ring</span>
-        </a>
-        <a href="#" class="nav-item pos-5" data-angle="180deg" data-todo="
-        # TODO: NUMPY-ONLY IMPLEMENTATIONS 
-        #       OF LENET
-        #       ~ TRANSFORMERS
-        #       ~ +">
-            <div class="rainbow-icon" style="filter: hue-rotate(45deg);"></div>
-            <span class="label">ML_From_Scratch</span>
-        </a>
-    </nav>
 
     <script>
-        const needle = document.getElementById('needle');
-        const links = document.querySelectorAll('.nav-item');
-        const display = document.getElementById('todo-display');
-
-        function updateTodo(text) {
-            display.innerHTML = '';
-            let charIndex = 0;
-            // Create spans for each character to allow for the reveal
-            text.split('').forEach((char, i) => {
-                if (char === '\n' || char === '\r') {
-                    // Create a line break
-                    const br = document.createElement('br');
-                    display.appendChild(br);
-                } else {
-                    const span = document.createElement('span');
-                    span.textContent = char === ' ' ? '\u00A0' : char; // Handle spaces
-                    span.className = 'char';
-                    display.appendChild(span);
-                    
-                    // Staggered appearance
-                    setTimeout(() => {
-                        span.classList.add('visible');
-                    }, charIndex * 30);
-                    charIndex++;
-                }
-            });
+        function openFile(id, el) {
+            document.querySelectorAll('.data-card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.file-entry').forEach(e => e.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            el.classList.add('active');
         }
-
-        links.forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                const angle = link.getAttribute('data-angle');
-                document.documentElement.style.setProperty('--rotation', angle);
-            });
-
-            link.addEventListener('mouseleave', () => {
-                document.documentElement.style.setProperty('--rotation', '15deg');
-            });
-
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const newText = link.getAttribute('data-todo');
-                updateTodo(newText);
-            });
-        });
-
-        // Parallax for the whole screen
-        document.addEventListener('mousemove', (e) => {
-            const x = (window.innerWidth / 2 - e.pageX) / 80;
-            const y = (window.innerHeight / 2 - e.pageY) / 80;
-            document.querySelector('nav').style.transform = `translate(${x}px, ${y}px)`;
-            document.querySelector('.compass-pivot').style.transform = `translate(${-x}px, ${-y}px)`;
-        });
     </script>
 </body>
 </html>
