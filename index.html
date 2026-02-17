@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISAIAH_HAUTE_ARCHIVE</title>
     <style>
         :root {
@@ -31,6 +32,7 @@
             position: relative;
             overflow: hidden; /* Prevent scrollbars from the dragging card */
             height: 100vh;
+            touch-action: none; /* Prevents some browsers from interfering with custom drag */
         }
 
         .top-right-notice {
@@ -86,7 +88,7 @@
 
         /* THE GLOBAL DRAGGABLE CARD */
         #dragCard {
-            position: fixed; /* Lives relative to the screen, not a div */
+            position: fixed;
             top: 20%;
             left: 35%;
             text-align: center;
@@ -96,14 +98,24 @@
             transform: rotate(-5deg);
             cursor: grab;
             user-select: none;
-            z-index: 9999; /* Always on top */
+            z-index: 9999;
             transition: none;
         }
 
-
-        
-
         #dragCard:active { cursor: grabbing; }
+
+        /* Mobile specific adjustments for the card */
+        @media (max-width: 600px) {
+            #dragCard {
+                width: 280px;
+                padding: 25px 15px;
+                left: 10%;
+                top: 30%;
+            }
+            .content-area { width: 90vw; }
+            .grid { grid-template-columns: 1fr 1fr 1fr; }
+            .grid div:nth-child(4), .grid div:nth-child(5) { display: none; }
+        }
 
         .num-grid { font-size: 18px; letter-spacing: 4px; line-height: 1.4; margin-bottom: 10px; font-weight: bold; }
         .brand-sub { font-size: 11px; margin-bottom: 25px; letter-spacing: 1px; }
@@ -190,10 +202,7 @@
                 </div>
             </div>
 
-            <div></div> 
-
             <div class="content-area">
-
                 <div id="f1" class="data-card">
                     <span class="serial">LOG_ID // 8829-A</span>
                     <div class="portrait-layout-top">
@@ -252,19 +261,31 @@
             document.getElementById('meta-desc').innerText = el.getAttribute('data-desc');
         }
 
-        // IMPROVED GLOBAL DRAG LOGIC
+        // UNIFIED DRAG LOGIC (MOUSE + TOUCH)
         const card = document.getElementById('dragCard');
         let active = false;
         let currentX, currentY, initialX, initialY;
         let xOffset = 0, yOffset = 0;
 
+        // Mouse Listeners
         card.addEventListener("mousedown", dragStart);
         document.addEventListener("mousemove", drag);
         document.addEventListener("mouseup", dragEnd);
 
+        // Touch Listeners (Mobile)
+        card.addEventListener("touchstart", dragStart, { passive: false });
+        document.addEventListener("touchmove", drag, { passive: false });
+        document.addEventListener("touchend", dragEnd);
+
         function dragStart(e) {
-            initialX = e.clientX - xOffset;
-            initialY = e.clientY - yOffset;
+            if (e.type === "touchstart") {
+                initialX = e.touches[0].clientX - xOffset;
+                initialY = e.touches[0].clientY - yOffset;
+            } else {
+                initialX = e.clientX - xOffset;
+                initialY = e.clientY - yOffset;
+            }
+
             if (e.target === card || card.contains(e.target)) {
                 active = true;
             }
@@ -272,9 +293,16 @@
 
         function drag(e) {
             if (active) {
-                e.preventDefault();
-                currentX = e.clientX - initialX;
-                currentY = e.clientY - initialY;
+                e.preventDefault(); // Prevents mobile scrolling while dragging
+
+                if (e.type === "touchmove") {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+
                 xOffset = currentX;
                 yOffset = currentY;
                 setTranslate(currentX, currentY, card);
@@ -282,7 +310,6 @@
         }
 
         function setTranslate(xPos, yPos, el) {
-            // Maintains the 5deg rotation while moving
             el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0) rotate(-5deg)`;
         }
 
