@@ -8,6 +8,9 @@
             --bg: #ffffff; 
             --ink: #000000;
             --faded: #888888;
+            --retro-grey: #c0c0c0; /* Classic Win95/2k Grey */
+            --retro-light: #ffffff;
+            --retro-shadow: #808080;
             --font-typewriter: "Courier New", Courier, monospace;
             --col-1: 180px;
             --col-2: 120px;
@@ -69,7 +72,7 @@
             display: flex; 
             height: var(--archive-max-height);
             align-items: flex-start;
-            justify-content: center;
+            justify-content: flex-start;
             padding-top: 40px;
         }
         
@@ -89,8 +92,7 @@
             font-size: 9px;
             line-height: 1.4;
             color: var(--faded);
-            border-left: 1px solid var(--faded);
-            padding-left: 10px;
+            padding-left: 0; 
         }
 
         .portrait-info h3 {
@@ -110,7 +112,6 @@
             grid-template-columns: repeat(4, 1fr); 
             gap: 10px; 
             margin-top: 20px;
-            border-top: 1px solid #eee;
             padding-top: 15px;
         }
 
@@ -134,15 +135,13 @@
             width: 100%;
             height: 500px; 
             object-fit: cover; 
-            border: 1px solid #000; 
         }
 
         .slide-caption {
             font-size: 10px;
             color: var(--faded);
             line-height: 1.2;
-            border-left: 1px solid var(--ink);
-            padding-left: 8px;
+            padding-left: 0;
         }
 
         /* DIAGONAL TOC STYLE */
@@ -172,17 +171,41 @@
         .archive-img { 
             width: 100%; 
             height: auto; 
-            border: 1px solid #000;
             display: block;
         }
 
         .main-view-portrait { aspect-ratio: 3/4; object-fit: cover; }
-        .thumb { aspect-ratio: 3/4; cursor: pointer; object-fit: cover; border: 1px solid #000; width: 100%; }
+        .thumb { aspect-ratio: 3/4; cursor: pointer; object-fit: cover; width: 100%; }
         .thumb:hover { filter: invert(1); }
 
-        /* SCROLLBARS */
-        .data-card::-webkit-scrollbar, .scroll-h::-webkit-scrollbar { width: 2px; height: 2px; }
-        .data-card::-webkit-scrollbar-thumb, .scroll-h::-webkit-scrollbar-thumb { background: #000; }
+        /* --- 2000s STYLE SCROLLBARS --- */
+        .data-card::-webkit-scrollbar, 
+        .scroll-h::-webkit-scrollbar { 
+            width: 16px; 
+            height: 16px; 
+        }
+        
+        /* The Track - Checkered pattern simulation */
+        .data-card::-webkit-scrollbar-track, 
+        .scroll-h::-webkit-scrollbar-track { 
+            background: #e0e0e0;
+            background-image: radial-gradient(#bcbcbc 25%, transparent 25%);
+            background-size: 2px 2px;
+        }
+
+        /* The Thumb - The classic bevel button */
+        .data-card::-webkit-scrollbar-thumb, 
+        .scroll-h::-webkit-scrollbar-thumb { 
+            background: var(--retro-grey);
+            border: 2px solid;
+            border-color: var(--retro-light) var(--retro-shadow) var(--retro-shadow) var(--retro-light);
+            box-shadow: inset 1px 1px 0 var(--retro-light), inset -1px -1px 0 var(--retro-shadow);
+        }
+
+        .data-card::-webkit-scrollbar-thumb:hover, 
+        .scroll-h::-webkit-scrollbar-thumb:hover { 
+            background: #d4d4d4;
+        }
 
         .manifest-footer { padding: 10px 10px; color: var(--faded); font-size: 9px; }
     </style>
