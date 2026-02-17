@@ -214,7 +214,6 @@
 
     <div class="line" style="margin-top: 20px;"></div>
     <h1 class="page-title">ISAIAH HAUTE</h1>
-    <div class="line"></div>
 
     <div class="grid manifest-header">
         <div>Name</div>
@@ -274,20 +273,28 @@
                     <div class="portrait-layout-top">
                         <div class="portrait-info">
                             <h3>METADATA_EXTRACT</h3>
-                            <p>OBJECT: HUMAN_FORM_01</p>
-                            <p>LIGHT: HIGH_CONTRAST</p>
-                            <p>STATUS: VERIFIED</p>
-                            <p style="margin-top: 10px;">PROPORTIONS ALIGN WITH MASTER GRID 004-B. READY FOR DISTRIBUTION.</p>
+                            <p id="meta-obj">OBJECT: HUMAN_FORM_01</p>
+                            <p id="meta-light">LIGHT: HIGH_CONTRAST</p>
+                            <p id="meta-status">STATUS: VERIFIED</p>
+                            <p id="meta-desc" style="margin-top: 10px;">PROPORTIONS ALIGN WITH MASTER GRID 004-B. READY FOR DISTRIBUTION.</p>
                         </div>
                         <div class="portrait-visuals-main">
                             <img id="mainView" class="archive-img main-view-portrait" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800" alt="Main View">
                         </div>
                     </div>
                     <div class="gallery-grid">
-                        <img class="thumb" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=200" onclick="swapView(this.src)">
-                        <img class="thumb" src="https://images.unsplash.com/photo-1539109132314-34a959df99b4?auto=format&fit=crop&q=80&w=200" onclick="swapView(this.src)">
-                        <img class="thumb" src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=200" onclick="swapView(this.src)">
-                        <img class="thumb" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=200" onclick="swapView(this.src)">
+                        <img class="thumb" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=200" 
+                             data-obj="HUMAN_FORM_01" data-light="HIGH_CONTRAST" data-status="VERIFIED" data-desc="PROPORTIONS ALIGN WITH MASTER GRID 004-B. READY FOR DISTRIBUTION."
+                             onclick="swapView(this)">
+                        <img class="thumb" src="https://images.unsplash.com/photo-1539109132314-34a959df99b4?auto=format&fit=crop&q=80&w=200" 
+                             data-obj="HUMAN_FORM_02" data-light="WARM_NATURAL" data-status="ARCHIVED" data-desc="TEXTURE ANALYSIS SHOWS ORGANIC COTTON BLEND. SUBJECT 02 PREFERRED."
+                             onclick="swapView(this)">
+                        <img class="thumb" src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=200" 
+                             data-obj="HUMAN_FORM_03" data-light="LOW_KEY" data-status="PENDING" data-desc="SILHOUETTE RATIO EXCEEDS STANDARD PARAMETERS. FURTHER EVALUATION REQUIRED."
+                             onclick="swapView(this)">
+                        <img class="thumb" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=200" 
+                             data-obj="HUMAN_FORM_04" data-light="STUDIO_NEUTRAL" data-status="CERTIFIED" data-desc="COLOR BALANCE OPTIMIZED FOR CYBERNETIC OPTICS. PRIMARY SELECTION."
+                             onclick="swapView(this)">
                     </div>
                 </div>
 
@@ -341,8 +348,16 @@
             document.getElementById(id).classList.add('active');
             el.classList.add('active');
         }
-        function swapView(src) {
-            document.getElementById('mainView').src = src;
+        
+        function swapView(el) {
+            // Update image source
+            document.getElementById('mainView').src = el.src;
+            
+            // Update metadata text
+            document.getElementById('meta-obj').innerText = 'OBJECT: ' + el.getAttribute('data-obj');
+            document.getElementById('meta-light').innerText = 'LIGHT: ' + el.getAttribute('data-light');
+            document.getElementById('meta-status').innerText = 'STATUS: ' + el.getAttribute('data-status');
+            document.getElementById('meta-desc').innerText = el.getAttribute('data-desc');
         }
     </script>
 </body>
