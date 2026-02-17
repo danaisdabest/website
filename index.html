@@ -2,15 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ARCHIVE_SYSTEM_V3</title>
+    <title>ISAIAH_HAUTE_ARCHIVE</title>
     <style>
         :root {
-            /* Aged printer paper white */
-            --bg: #f5f5f3; 
-            --ink: #1a1a1a;
-            --faded: #8c8c8c;
-            /* Using the most classic typewriter stack available */
-            --font-typewriter: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Console", monospace;
+            --bg: #ffffff; 
+            --ink: #000000;
+            --faded: #888888;
+            --font-typewriter: "Courier New", Courier, monospace;
+            --col-1: 180px;
+            --col-2: 120px;
+            --col-3: 100px;
+            --archive-width: 550px;
+            --archive-max-height: 85vh; 
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -19,167 +22,294 @@
             background-color: var(--bg);
             color: var(--ink);
             font-family: var(--font-typewriter);
-            padding: 50px 70px;
             text-transform: uppercase;
-            /* Subtle ink-on-paper texture */
-            background-image: url("https://www.transparenttextures.com/patterns/p6.png");
+            line-height: 1.0;
+            padding-bottom: 40px;
         }
 
-        /* TITLE: SAME TYPEWRITER FONT, JUST BOLD AND TIGHT */
-        .page-title {
-            font-weight: 900;
-            font-size: 1.1rem;
-            letter-spacing: -0.5px;
-            margin-bottom: 70px;
-            display: inline-block;
-            white-space: nowrap;
-        }
+        .line { width: 100%; border-top: 1px solid var(--ink); }
 
-        /* HEADERS */
-        .manifest-header {
+        .page-title { padding: 10px 10px; font-weight: bold; font-size: 1.1rem; letter-spacing: -0.5px; }
+
+        .grid {
             display: grid;
-            grid-template-columns: 220px 150px 100px 1fr;
+            grid-template-columns: var(--col-1) var(--col-2) var(--col-3) 150px 1fr;
+            padding-left: 10px;
+            width: 100%;
+        }
+
+        .manifest-header { color: var(--faded); padding: 5px 0; font-size: 10px; }
+        .manifest-header div { text-decoration: underline; }
+
+        .main-wrapper { display: flex; flex-direction: column; width: 100%; }
+
+        .file-entry { cursor: pointer; font-size: 11px; color: var(--faded); padding: 2px 0; }
+        .file-entry:hover { color: var(--ink); }
+        .file-entry.active { color: var(--ink); font-weight: bold; }
+        .col-name { text-decoration: underline; }
+
+        /* ARCHIVE CONTENT WINDOW */
+        .content-area { 
+            grid-column: 5; 
+            grid-row: 1 / span 100; 
+            padding-top: 15px; 
+            width: var(--archive-width);
+        }
+
+        .data-card { 
+            display: none; 
+            max-height: var(--archive-max-height); 
+            overflow-y: auto; 
+            padding-right: 15px;
+        }
+
+        .data-card.active { display: block; }
+
+        .data-card.index-card.active { 
+            display: flex; 
+            height: var(--archive-max-height);
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 40px;
+        }
+        
+        .serial { font-size: 9px; color: var(--faded); margin-bottom: 20px; display: block; text-transform: uppercase; }
+
+        /* PORTRAIT ENLARGE LAYOUT */
+        .portrait-layout-top {
+            display: flex;
+            gap: 20px;
+            align-items: flex-end; 
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+
+        .portrait-info {
+            flex: 1;
+            font-size: 9px;
+            line-height: 1.4;
             color: var(--faded);
-            border-bottom: 1px solid var(--faded);
-            padding-bottom: 5px;
-            margin-bottom: 25px;
-            font-size: 10px;
+            border-left: 1px solid var(--faded);
+            padding-left: 10px;
         }
 
-        /* LAYOUT */
-        .container {
-            display: grid;
-            grid-template-columns: 470px 1fr;
-            gap: 100px;
+        .portrait-info h3 {
+            color: var(--ink);
+            font-size: 11px;
+            margin-bottom: 10px;
+            text-decoration: underline;
         }
 
-        /* DIRECTORY ENTRIES */
-        .directory-list {
+        .portrait-visuals-main {
+            width: 80%; 
+        }
+
+        .gallery-grid { 
+            width: 100%; 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 10px; 
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        /* HORIZONTAL SLIDER WITH TEXT */
+        .scroll-h { 
+            display: flex; 
+            overflow-x: auto; 
+            gap: 20px; 
+            padding-bottom: 15px; 
+        }
+
+        .slide-item {
+            min-width: 350px;
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
+            gap: 10px;
         }
 
-        .file-entry {
-            display: grid;
-            grid-template-columns: 220px 150px 100px;
-            padding: 8px 0;
-            cursor: pointer;
-            font-size: 11px;
+        .scroll-h-item { 
+            width: 100%;
+            height: 500px; 
+            object-fit: cover; 
+            border: 1px solid #000; 
+        }
+
+        .slide-caption {
+            font-size: 10px;
             color: var(--faded);
+            line-height: 1.2;
+            border-left: 1px solid var(--ink);
+            padding-left: 8px;
         }
 
-        .file-entry:hover {
-            color: var(--ink);
+        /* DIAGONAL TOC STYLE */
+        .diagonal-toc {
+            padding: 60px 50px;
+            border-radius: 4px;
+            width: fit-content;
+            transform: rotate(-4deg);
+            background: var(--bg);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
         }
 
-        .file-entry.active {
-            color: var(--ink);
-            font-weight: bold;
+        .diagonal-toc h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--ink);
+            display: inline-block;
         }
 
-        .file-entry.active div:first-child::before {
-            content: "* "; /* Old school selection marker */
+        .diagonal-toc p {
+            font-size: 13px;
+            margin: 10px 0;
+            letter-spacing: 1.5px;
         }
 
-        /* CONTENT AREA */
-        .data-card {
-            display: none;
-            max-width: 400px;
-        }
-
-        .data-card.active {
+        /* IMAGE STYLING */
+        .archive-img { 
+            width: 100%; 
+            height: auto; 
+            border: 1px solid #000;
             display: block;
         }
 
-        .serial {
-            font-size: 9px;
-            color: var(--faded);
-            margin-bottom: 30px;
-            display: block;
-        }
+        .main-view-portrait { aspect-ratio: 3/4; object-fit: cover; }
+        .thumb { aspect-ratio: 3/4; cursor: pointer; object-fit: cover; border: 1px solid #000; width: 100%; }
+        .thumb:hover { filter: invert(1); }
 
-        .content-body {
-            font-size: 12px;
-            line-height: 1.5;
-            text-transform: none; /* Keeps that "typed letter" feel */
-        }
+        /* SCROLLBARS */
+        .data-card::-webkit-scrollbar, .scroll-h::-webkit-scrollbar { width: 2px; height: 2px; }
+        .data-card::-webkit-scrollbar-thumb, .scroll-h::-webkit-scrollbar-thumb { background: #000; }
 
+        .manifest-footer { padding: 10px 10px; color: var(--faded); font-size: 9px; }
     </style>
 </head>
 <body>
 
+    <div class="line" style="margin-top: 20px;"></div>
     <h1 class="page-title">ISAIAH HAUTE</h1>
+    <div class="line"></div>
 
-    <div class="manifest-header">
+    <div class="grid manifest-header">
         <div>Name</div>
-        <div>Update Time</div>
+        <div>Update</div>
         <div>Size</div>
+        <div></div> 
         <div>Archives</div>
     </div>
+    <div class="line"></div>
 
-    <div class="container">
-        <div class="directory-list">
-            
-            <div class="file-entry active" onclick="openFile('f1', this)">
-                <div>001_Introduction</div>
-                <div>10:22:01</div>
-                <div>4.0kb</div>
-            </div>
-
-            <div class="file-entry" onclick="openFile('f2', this)">
-                <div>042_Visual_Manifesto</div>
-                <div>14:55:12</div>
-                <div>120kb</div>
-            </div>
-
-            <div class="file-entry" onclick="openFile('f3', this)">
-                <div>108_Archive_Collection</div>
-                <div>08:30:59</div>
-                <div>88.4mb</div>
-            </div>
-
-            <div class="file-entry" onclick="openFile('f4', this)">
-                <div>999_Terminal_Connect</div>
-                <div>00:01:44</div>
-                <div>1.2kb</div>
-            </div>
-
-        </div>
-
-        <div class="content-viewer">
-            <div id="f1" class="data-card active">
-                <span class="serial">LOG_ID // 8829-A</span>
-                <div class="content-body">
-                    subject: initialization.<br><br>
-                    this system is a raw data retrieval node for the isaiah haute collection. all entries are generated via the primary terminal.
+    <div class="main-wrapper">
+        <div class="grid" style="padding-top: 10px; padding-bottom: 30px;">
+            <div class="directory-list" style="grid-column: 1 / span 3;">
+                <div class="file-entry grid active" style="grid-template-columns: var(--col-1) var(--col-2) var(--col-3); padding-left: 0;" onclick="openFile('f0', this)">
+                    <div class="col-name">000_Index_Master</div>
+                    <div>00:00:00</div>
+                    <div>0.1kb</div>
+                </div>
+                <div class="file-entry grid" style="grid-template-columns: var(--col-1) var(--col-2) var(--col-3); padding-left: 0;" onclick="openFile('f1', this)">
+                    <div class="col-name">001_Portrait_Expand</div>
+                    <div>10:22:01</div>
+                    <div>4.0kb</div>
+                </div>
+                <div class="file-entry grid" style="grid-template-columns: var(--col-1) var(--col-2) var(--col-3); padding-left: 0;" onclick="openFile('f2', this)">
+                    <div class="col-name">042_Narrow_Slide</div>
+                    <div>14:55:12</div>
+                    <div>120kb</div>
+                </div>
+                <div class="file-entry grid" style="grid-template-columns: var(--col-1) var(--col-2) var(--col-3); padding-left: 0;" onclick="openFile('f3', this)">
+                    <div class="col-name">108_Infinite_Feed</div>
+                    <div>08:30:59</div>
+                    <div>88.4mb</div>
                 </div>
             </div>
 
-            <div id="f2" class="data-card">
-                <span class="serial">LOG_ID // 9901-B</span>
-                <div class="content-body">
-                    subject: visual manifesto.<br><br>
-                    the focus is the silhouette. the texture is the evidence. 
-                </div>
-            </div>
+            <div></div> 
 
-            <div id="f3" class="data-card">
-                <span class="serial">LOG_ID // 4412-G</span>
-                <div class="content-body">
-                    subject: physical collection.<br><br>
-                    archives updated for the current season. documentation of construction and fit.
+            <div class="content-area">
+                
+                <div id="f0" class="data-card index-card active">
+                    <div class="diagonal-toc">
+                        <span class="serial" style="margin-bottom: 10px;">LOG_ID // 0000-X</span>
+                        <h2>ARCHIVE_INDEX</h2>
+                        <p>001 // PORTRAIT_EXPAND_ANALYSIS</p>
+                        <p>042 // NARROW_SLIDE_MANIFEST</p>
+                        <p>108 // INFINITE_FEED_DATA</p>
+                        <p>999 // TERMINAL_CONNECTION [LOCKED]</p>
+                        <div style="margin-top: 35px; font-size: 8px; color: var(--faded);">
+                            AUTHORIZATION: ISAIAH_HAUTE_V1<br>
+                            STATUS: IMMUTABLE_RECORD
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div id="f4" class="data-card">
-                <span class="serial">LOG_ID // 0000-O</span>
-                <div class="content-body">
-                    subject: connectivity.<br><br>
-                    terminal address: archive@isaiahhaute.com
+                <div id="f1" class="data-card">
+                    <span class="serial">LOG_ID // 8829-A</span>
+                    <div class="portrait-layout-top">
+                        <div class="portrait-info">
+                            <h3>METADATA_EXTRACT</h3>
+                            <p>OBJECT: HUMAN_FORM_01</p>
+                            <p>LIGHT: HIGH_CONTRAST</p>
+                            <p>STATUS: VERIFIED</p>
+                            <p style="margin-top: 10px;">PROPORTIONS ALIGN WITH MASTER GRID 004-B. READY FOR DISTRIBUTION.</p>
+                        </div>
+                        <div class="portrait-visuals-main">
+                            <img id="mainView" class="archive-img main-view-portrait" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800" alt="Main View">
+                        </div>
+                    </div>
+                    <div class="gallery-grid">
+                        <img class="thumb" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=200" onclick="swapView(this.src)">
+                        <img class="thumb" src="https://images.unsplash.com/photo-1539109132314-34a959df99b4?auto=format&fit=crop&q=80&w=200" onclick="swapView(this.src)">
+                        <img class="thumb" src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=200" onclick="swapView(this.src)">
+                        <img class="thumb" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=200" onclick="swapView(this.src)">
+                    </div>
+                </div>
+
+                <div id="f2" class="data-card">
+                    <span class="serial">LOG_ID // 9901-B</span>
+                    <div class="scroll-h">
+                        <div class="slide-item">
+                            <img class="scroll-h-item" src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=600">
+                            <div class="slide-caption">
+                                <strong>ITEM_042A</strong><br>
+                                SPECTRAL_ANALYSIS: COMPLETE<br>
+                                TAG: STREET_MINIMAL
+                            </div>
+                        </div>
+                        <div class="slide-item">
+                            <img class="scroll-h-item" src="https://images.unsplash.com/photo-1485462537746-965f33f7f6a7?auto=format&fit=crop&q=80&w=600">
+                            <div class="slide-caption">
+                                <strong>ITEM_042B</strong><br>
+                                SPECTRAL_ANALYSIS: PENDING<br>
+                                TAG: BRUTALIST_HUE
+                            </div>
+                        </div>
+                        <div class="slide-item">
+                            <img class="scroll-h-item" src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=600">
+                            <div class="slide-caption">
+                                <strong>ITEM_042C</strong><br>
+                                SPECTRAL_ANALYSIS: COMPLETE<br>
+                                TAG: TEXTURE_SCAN_09
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="f3" class="data-card">
+                    <span class="serial">LOG_ID // 4412-G</span>
+                    <img class="archive-img" src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&q=80&w=800">
+                    <img class="archive-img" src="https://images.unsplash.com/photo-1550630968-316228340156?auto=format&fit=crop&q=80&w=800">
+                    <img class="archive-img" src="https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?auto=format&fit=crop&q=80&w=800">
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="line"></div>
+    <div class="manifest-footer">END_OF_RECORD // ALL RIGHTS RESERVED</div>
 
     <script>
         function openFile(id, el) {
@@ -187,6 +317,9 @@
             document.querySelectorAll('.file-entry').forEach(e => e.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             el.classList.add('active');
+        }
+        function swapView(src) {
+            document.getElementById('mainView').src = src;
         }
     </script>
 </body>
