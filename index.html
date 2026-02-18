@@ -60,6 +60,19 @@
         .nested-content { display: none; }
         .nested-content.visible { display: block; }
 
+        .top-right-notice {
+    position: fixed;
+    top: 25px;
+    right: 10px;
+    text-align: right;
+    font-size: 7px; /* Much smaller */
+    line-height: 1.2;
+    color: var(--faded);
+    z-index: 10000; /* Keeps it above everything else */
+    letter-spacing: 0.5px;
+    pointer-events: none; /* Prevents it from interfering with clicks */
+}
+
         /* DRAGGABLE CARD */
         #dragCard {
             position: fixed; top: 25%; left: 38%; text-align: center; width: 360px; padding: 40px 30px;
@@ -121,11 +134,7 @@
 </head>
 <body>
 
-    <div class="top-right-notice">
-        THIS SITE IS AN UNAUTHORIZED<br>
-        RECREATION/RESURRECTION OF<br>
-        THE MAISON MARTIN MARGIELA WEBSITE FROM 2007<br>
-    </div>
+
 
     <div id="dragCard">
         <div class="num-grid">0 1 2 3 4 5 6 7 8 9<br>10 11 12 13 14 15 16<br>17 18 19 20 21 22 23</div>
@@ -139,6 +148,12 @@
     </div>
 
     <div class="line" style="margin-top: 20px;"></div>
+    <div class="top-right-notice">
+        THIS SITE IS AN UNAUTHORIZED<br>
+        VIBE-CODED RESURRECTION OF<br>
+        THE MAISON MARTIN MARGIELA WEBSITE FROM 2007<br>
+    </div>
+
     <h1 class="page-title">ISAIAH HAUTE</h1>
 
     <div class="grid manifest-header">
