@@ -72,17 +72,51 @@
         .draggable-card:active { cursor: grabbing; }
         .draggable-card img { pointer-events: none; -webkit-user-drag: none; width: 100%; display: block;}
 
-        #dragCard { top: 25%; left: 35%; width: 360px; padding: 40px 30px; --rot: -5deg; transform: rotate(var(--rot)); }
+        #dragCard { top: 15%; left: 35%; width: 360px; padding: 30px 30px; --rot: -7deg; transform: rotate(var(--rot)); }
         #memoCard { top: 55%; left: 10%; width: 240px; padding: 20px; --rot: 3deg; transform: rotate(var(--rot)); }
-        #imageCard { top: 10%; right: 10%; width: 180px; padding: 6px; --rot: -2deg; transform: rotate(var(--rot)); }
+        #imageCard { top: 25%; right: 30%; width: 180px; padding: 6px; --rot: -5deg; transform: rotate(var(--rot)); }
 
-        .num-grid { font-size: 18px; letter-spacing: 4px; line-height: 1.4; margin-bottom: 10px; font-weight: bold; text-align: center; }
-        .brand-sub { font-size: 11px; margin-bottom: 25px; letter-spacing: 1px; text-align: center; }
-        .toc-item { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; font-size: 10px; }
-        .circle-num { border: 1px solid var(--ink); border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 9px; }
+        /* Tighten the number grid at the top */
+        .num-grid { 
+            font-size: 18px; 
+            letter-spacing: 2px; /* Slightly tighter letters for impact */
+            line-height: 1.1;    /* Reduces the "double space" look */
+            margin-bottom: 15px; 
+            font-weight: 900;    /* Maximum boldness */
+            text-align: center; 
+        }
+        
+        /* Tighten the list items */
+        .toc-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            margin-bottom: 3px; /* Reduced from 12px to tighten the list */
+            font-size: 12px; 
+            font-weight: bold;  /* Makes the labels bolder */
+        }
+        
+        /* Make the circles and numbers inside them bolder */
+        .circle-num { 
+            border: 2px solid var(--ink); /* Thicker border */
+            border-radius: 50%; 
+            width: 20px; 
+            height: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 9px; 
+            font-weight: 900; 
+            flex-shrink: 0;
+        }
+        
+        /* Ensure the text spans inside the list are bold */
+        .toc-item span {
+            font-weight: 800;
+        }        .brand-sub { font-size: 11px; margin-bottom: 25px; letter-spacing: 1px; text-align: center; }
 
         .memo-title { font-size: 10px; border-bottom: 1px solid var(--ink); margin-bottom: 12px; padding-bottom: 4px; font-weight: bold;}
-        .memo-body { font-size: 9px; line-height: 1.5; text-transform: none; color: #444; }
+        .memo-body { font-size: 9px; font-weight: bold; line-height: 1.5; text-transform: none; color: #444; }
         .img-meta { font-size: 8px; color: var(--faded); margin-top: 8px; text-align: center; }
 
         /* CONTENT AREA */
@@ -124,20 +158,43 @@
     </div>
 
     <div id="dragCard" class="draggable-card">
-        <div class="num-grid">0 1 2 3 4 5 6 7 8 9<br>10 11 12 13 14 15 16<br>17 18 19 20 21 22 23</div>
-        <div class="brand-sub">ISAIAH HAUTE<br>ARCHIVE</div>
+        <div class="num-grid"> -1 0 1 2 3 4 5 6 7 8 9<br>10 11 12 13 14 15 16<br>17 18 19 20</div>
+        <div class="brand-sub">SUGGESTED SUBSET</div>
         <div class="line" style="margin-bottom: 25px;"></div>
         <div class="toc-list">
-            <div class="toc-item"><div class="circle-num">1</div><span>PORTRAIT_EXPAND_ANALYSIS</span></div>
-            <div class="toc-item"><div class="circle-num">42</div><span>NARROW_SLIDE_MANIFEST</span></div>
+            <div class="toc-item"><div class="circle-num">-1</div><span>HOWTO BUILD THE SHELLPHONE FROM IT FOLLOWS</span></div>
+            <div class="toc-item"><div class="circle-num">0</div><span>EYE_BLINKING_LOOKING_ROLLING</span></div>
+            <div class="toc-item"><div class="circle-num">1</div><span>SHELL_PHONE_1</span></div>
+            <div class="toc-item"><div class="circle-num">2</div><span>SHELL_PHONE_2</span></div>
+            <div class="toc-item"><div class="circle-num">3</div><span>ESP32_EYE_RING</span></div>
+            <div class="toc-item"><div class="circle-num">4</div><span>SHELL_PHONE_MINUS_1</span></div>
+            <div class="toc-item"><div class="circle-num">5</div><span>SHELL_PHONE_VISIBLE_INNARDS</span></div>
+            <div class="toc-item"><div class="circle-num">6</div><span>SHELL_PHONE_INVISIBLE_INNARDS</span></div>
+            <div class="toc-item"><div class="circle-num">7</div><span>SHARE_OFFLINE_ZINE_PLAYLIST</span></div>
+            <div class="toc-item"><div class="circle-num">8</div><span>GIANT_FLOWER[PAPER]</span></div>
+            <div class="toc-item"><div class="circle-num">9</div><span>LACROIX_FOR_SCALE</span></div>
+            <div class="toc-item"><div class="circle-num">10</div><span>EYES_AND_MOUTH</span></div>
+            <div class="toc-item"><div class="circle-num">11</div><span>KIDS_LOOPED_BUBBLY</span></div>
+            <div class="toc-item"><div class="circle-num">12</div><span>EDGE_OF_THE_OCEAN_INTRO</span></div>
+            <div class="toc-item"><div class="circle-num">13</div><span>INTO_THE_NIGHT_ALWAYS_IN_THE_AIR</span></div>
+            <div class="toc-item"><div class="circle-num">14</div><span>TANGIBLE_CONCEPT_ART</span></div>
+            <div class="toc-item"><div class="circle-num">15</div><span>LeNet Implemented with NumPy</span></div>
+            <div class="toc-item"><div class="circle-num">16</div><span>Attention Is All You Need, implemented with NumPy</span></div>
+            <div class="toc-item"><div class="circle-num">17</div><span>Original Python library: dollartime for financial data</span></div>
+
+
+
+
+
         </div>
     </div>
 
     <div id="memoCard" class="draggable-card">
-        <div class="memo-title">SYSTEM_LOG_v.04</div>
-        <div class="memo-body">NOTICE: DATA FRAGMENTATION DETECTED. ALL ASSETS ARE PULLED FROM TEMPORARY CACHE.</div>
+        <div class="memo-title">SYSTEM_LOG_v0.0.01</div>
+        <div class="memo-body">FIRST PASS RESURRECTION OF THE MAISON MARTIN MARGIELA WEBSITE FROM 2007<br><br>
+        EXPERIMENTAL WORKS, TANGIBLE AND DIGITAL</div>
     </div>
-    <div id="videoCard" class="draggable-card" style="top: 10%; right: 5%; width: 220px; padding: 5px;">
+    <div id="videoCard" class="draggable-card" style="top: 40%; right: 30%; width: 220px; padding: 5px; --rot: 5deg; transform: rotate(var(--rot));">
         <video autoplay muted loop playsinline style="width: 100%; display: block;">
             <source src="videos/myclip.mp4" type="video/mp4">
         </video>
@@ -151,7 +208,7 @@
     -->
 
     <div class="line" style="margin-top: 20px;"></div>
-    <h1 class="page-title">ISAIAH HAUTE</h1>
+    <h1 class="page-title">DANA K</h1>
     <div class="grid manifest-header">
         <div>Name</div><div>Update</div><div>Size</div><div>Status</div>
     </div>
